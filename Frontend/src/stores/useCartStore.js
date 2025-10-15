@@ -1,13 +1,14 @@
 import { create } from "zustand";
 import axios from "../libs/axios";
 import { toast } from "react-hot-toast";
-import { to } from "./../../node_modules/rollup/dist/es/shared/node-entry";
+// import { to } from "./../../node_modules/rollup/dist/es/shared/node-entry";
 
 export const useCartStore = create((set, get) => ({
     cart: [],
     coupoun: null,
     total: 0,
     subtotal: 0,
+    isCouponApplied: false,
 
     getCartItems: async () => {
         try {
@@ -21,6 +22,10 @@ export const useCartStore = create((set, get) => ({
                     "Something went wrong, please try again."
             );
         }
+    },
+
+    clearCart : async()=>{
+      set({cart:[], total:0, subtotal:0, coupon:null});
     },
 
     addToCart: async (product) => {
@@ -47,6 +52,15 @@ export const useCartStore = create((set, get) => ({
                     "Something went wrong, please try again."
             );
         }
+    },
+
+    removeFromCart: async (productId) => {
+            await axios.delete(`/cart/`, { data: { productId } });
+            toast.success("Product removed from cart");
+            set((prevState) => ({
+                cart: prevState.cart.filter((item) => item._id !== productId),
+            }));
+            get().calculateTotals();
     },
 
     calculateTotals: () => {
