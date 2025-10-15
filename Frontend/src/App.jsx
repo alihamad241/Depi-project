@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 
 import Navbar from './components/Navbar'
 import LoadingSpinner from "./components/LoadingSpinner";
+// import { Toaster } from 'react-hot-toast';
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
       </Routes>
       </div>
-    
+      {/* <Toaster/> */}
     </div>
     
   );
