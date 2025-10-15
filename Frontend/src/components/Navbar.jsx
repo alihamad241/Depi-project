@@ -1,5 +1,7 @@
 import { ShoppingCart, UserPlus, LogIn, LogOut, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
+// import { useUserStore } from "../stores/useUserStore";
+// import { useCartStore } from "../stores/useCartStore";
 
 
 const Navbar = () => {
@@ -10,6 +12,7 @@ const Navbar = () => {
     // const {user, logout} = useUserStore();
     // const isAdmin = user?.role === "admin";
     const cart = [1, 2];
+    // const {cart} = useCartStore();
     const logout = () => {
         console.log("Logged out");
     };
