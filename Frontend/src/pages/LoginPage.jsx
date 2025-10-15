@@ -3,14 +3,19 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { LogIn, Mail, Lock, ArrowRight, Loader } from "lucide-react";
+// import { useUserStore } from "../stores/useUserStore";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const loading = true;
+    const loading = false; //will be removed when the useUserStore is available
+
+    // const {login, loading }=useUserStore()
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(email, password);
+        // login(email, password);
     };
     return (
         <>
@@ -33,7 +38,6 @@ const LoginPage = () => {
                 >
                     <div className="bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10">
                         <form className="space-y-6" onSubmit={handleSubmit}>
-
                             <div>
                                 {/* htmlFor-->means: associates the label with the input whose id is name*/}
                                 <label
@@ -57,9 +61,7 @@ const LoginPage = () => {
                                         placeholder="you@example.com"
                                         value={email}
                                         onChange={(e) =>
-                                            setEmail(
-                                                e.target.value
-                                            )
+                                            setEmail(e.target.value)
                                         }
                                         required
                                     />

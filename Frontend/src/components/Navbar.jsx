@@ -7,6 +7,8 @@ const Navbar = () => {
 
     const user = true;
     const isAdmin = true;
+    // const {user, logout} = useUserStore();
+    // const isAdmin = user?.role === "admin";
     const cart = [1, 2];
     const logout = () => {
         console.log("Logged out");
