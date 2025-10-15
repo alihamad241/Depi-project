@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { use, useEffect } from "react";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
+import PurchaseCancelPage from "./pages/PurchaseCancelPage";
 // import { Toaster } from 'react-hot-toast';
 
 function App() {
