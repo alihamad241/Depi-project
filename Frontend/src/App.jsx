@@ -6,7 +6,7 @@ import Navbar from './components/Navbar'
 import LoadingSpinner from "./components/LoadingSpinner";
 import CategoryPage from './pages/CategoryPage'
 import { useCartStore } from './stores/useCartStore'
-import { use, useEffect } from 'react'
+import {useEffect } from 'react'
 import { Navigate, Route, Routes } from "react-router-dom";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
@@ -17,17 +17,18 @@ import { useUserStore } from './stores/useUserStore';
 
 function App() {
 const {user, checkAuth, checkingAuth} = useUserStore();
+const {getCartItems} = useCartStore();
+useEffect(() => {
+		checkAuth();
+	}, [checkAuth]);
 
-  const {getCartItems} = useCartStore();
-  useEffect(() => {
-    getCartItems();
-  }, [getCartItems]);
+	useEffect(() => {
+		if (!user) return;
 
+		getCartItems();
+	}, [getCartItems, user]);
 
-  useEffect(()=>{checkAuth()},[checkAuth]);
-    if(checkingAuth){
-      return <LoadingSpinner/>
-    }
+	if (checkingAuth) return <LoadingSpinner />;
     return (
         <div class="min-h-screen bg-gray-900 text-white relative overflow-hidden">
             <div className="absolute inset-0 overflow-hidden">
@@ -40,26 +41,19 @@ const {user, checkAuth, checkingAuth} = useUserStore();
 
                 <Routes>
                     <Route path="/" element={<HomePage />} />
-                    {/* <Route path="/signup" element={! user ? <SignUpPage /> : <Navigate to='/'/>} /> */}
-                    <Route path="/signup" element={<SignUpPage />} />
-                    {/* <Route path="/login" element={user? <HomePage/> : <LoginPage />} /> */}
+                    <Route path="/signup" element={!user ? <SignUpPage /> : <Navigate to='/' />} />
                     <Route path="/login" element={<LoginPage />} />
-                    {/* <Route path='/purchase-success' element={user? <PurchaseSuccessPage/> : <Navigate to='/login' />} /> */}
                     <Route
-                        path="/purchase-success"
-                        element={<PurchaseSuccessPage />}
+                      path='/purchase-success'
+                      element={user ? <PurchaseSuccessPage /> : <Navigate to='/login' />}
                     />
-                    {/* <Route path='/purchase-cancel' element={user? <PurchaseCancelPage/> : <Navigate to='/login' />} /> */}
-                    <Route
-                        path="/purchase-cancel"
-                        element={<PurchaseCancelPage />}
-                    />
+                    <Route path='/purchase-cancel' element={user? <PurchaseCancelPage/> : <Navigate to='/login' />} />
 
                     <Route path='/category/:category' element={<CategoryPage />}/>
                     <Route path="/cart" element={<CartPage />} />
                 </Routes>
             </div>
-            {/* <Toaster/> */}
+            <Toaster />
         </div>
     );
 }
