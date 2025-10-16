@@ -1,5 +1,7 @@
 import { ShoppingCart, UserPlus, LogIn, LogOut, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCartStore } from "../stores/useCartStore";
+
 
 
 const Navbar = () => {
@@ -7,7 +9,7 @@ const Navbar = () => {
 
     const user = true;
     const isAdmin = true;
-    const cart = [1, 2];
+    const {cart} = useCartStore();
     const logout = () => {
         console.log("Logged out");
     };
@@ -50,7 +52,7 @@ const Navbar = () => {
                         {isAdmin && (
                             <Link
                                 className="bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-1 rounded-md font-medium
-								 transition duration-300 ease-in-out flex items-center"
+								transition duration-300 ease-in-out flex items-center"
                                 to={"/secret-dashboard"}>
                                 <Lock
                                     className="inline-block mr-1"
