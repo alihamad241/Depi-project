@@ -1,29 +1,33 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import SignUpPage from "./pages/SignUpPage";
-import LoginPage from "./pages/LoginPage";
-
-import Navbar from "./components/Navbar";
+import { Route, Routes } from 'react-router-dom'
+import HomePage from './pages/HomePage'
+import SignUpPage from './pages/SignUpPage'
+import LoginPage from './pages/LoginPage'
+import CartPage from './pages/CartPage'
+import Navbar from './components/Navbar'
 import LoadingSpinner from "./components/LoadingSpinner";
-import { use, useEffect } from "react";
+import CategoryPage from './pages/CategoryPage'
+import { useCartStore } from './stores/useCartStore'
+import { use, useEffect } from 'react'
+import { Navigate, Route, Routes } from "react-router-dom";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
 // import { Toaster } from 'react-hot-toast';
 
+
+
 function App() {
-    // const {user, checkAuth, checkingAuth} = useUserStore();
-    // const {getCartItems} = useCartStore();
-    // useEffect(() => {
-    //     checkAuth();
-    // }, [checkAuth]);
+// const {user, checkAuth, checkingAuth} = useUserStore();
 
-    // useEffect(() => {if(!user) return; getCartItems();}, [getCartItems, user]);
+  const {getCartItems} = useCartStore();
+  useEffect(() => {
+    getCartItems();
+  }, [getCartItems]);
 
-    // useEffect(()=>{checkAuth()},[checkAuth]);
+
+  // useEffect(()=>{checkAuth()},[checkAuth]);
     // if(checkingAuth){
     //   return <LoadingSpinner/>
     // }
-
     return (
         <div class="min-h-screen bg-gray-900 text-white relative overflow-hidden">
             <div className="absolute inset-0 overflow-hidden">
@@ -31,7 +35,6 @@ function App() {
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.3)_0%,rgba(10,80,60,0.2)_45%,rgba(0,0,0,0.1)_100%)]" />
                 </div>
             </div>
-
             <div class="relative z-10 pt-20">
                 <Navbar />
 
@@ -51,6 +54,9 @@ function App() {
                         path="/purchase-cancel"
                         element={<PurchaseCancelPage />}
                     />
+
+                    <Route path='/category/:category' element={<CategoryPage />}/>
+                    <Route path="/cart" element={<CartPage />} />
                 </Routes>
             </div>
             {/* <Toaster/> */}
