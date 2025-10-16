@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 
 import Navbar from './components/Navbar'
 import LoadingSpinner from "./components/LoadingSpinner";
+import CategoryPage from './pages/CategoryPage'
 
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
+
+        <Route path='/category/:category' element={<CategoryPage />}/>
       </Routes>
       </div>
     
