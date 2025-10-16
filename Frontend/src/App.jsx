@@ -10,6 +10,7 @@ import {useEffect } from 'react'
 import { Navigate, Route, Routes } from "react-router-dom";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
+import AdminPage from "./pages/AdminPage";
 import { Toaster } from 'react-hot-toast';
 import { useUserStore } from './stores/useUserStore';
 
@@ -51,6 +52,7 @@ useEffect(() => {
 
                     <Route path='/category/:category' element={<CategoryPage />}/>
                     <Route path="/cart" element={<CartPage />} />
+                    <Route path="/admin" element={<AdminPage />} />
                 </Routes>
             </div>
             <Toaster />

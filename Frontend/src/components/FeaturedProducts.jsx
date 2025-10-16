@@ -35,7 +35,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
             <div className="flex transition-transform duration-300 ease-in-out"
               style={{transform:`translateX(-${currentIndex*(100/itemsPerPage)}%)`}}
             >
-              {featuredProducts?.map((product)=>{
+              {featuredProducts?.map((product)=>(
                 <div key={product._id} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2">
                   <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden h-full transition-all
                   duration-200 hover:shadow-xl border border-emerald-500/30">
@@ -62,7 +62,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
                     </div>
                   </div>
                 </div>
-              })}
+              ))}
             </div>
           </div>
           <button
