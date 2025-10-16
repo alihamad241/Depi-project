@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 import CartPage from './pages/CartPage'
 import Navbar from './components/Navbar'
 import LoadingSpinner from "./components/LoadingSpinner";
+import CategoryPage from './pages/CategoryPage'
 import { useCartStore } from './stores/useCartStore'
 import { useEffect } from 'react'
 
@@ -30,7 +31,9 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path='/category/:category' element={<CategoryPage />}/>
         <Route path="/cart" element={<CartPage />} />
+
       </Routes>
       </div>
     
