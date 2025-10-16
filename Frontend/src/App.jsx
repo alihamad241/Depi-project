@@ -1,4 +1,3 @@
-import { Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
@@ -11,12 +10,13 @@ import { use, useEffect } from 'react'
 import { Navigate, Route, Routes } from "react-router-dom";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
-// import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
+import { useUserStore } from './stores/useUserStore';
 
 
 
 function App() {
-// const {user, checkAuth, checkingAuth} = useUserStore();
+const {user, checkAuth, checkingAuth} = useUserStore();
 
   const {getCartItems} = useCartStore();
   useEffect(() => {
@@ -24,10 +24,10 @@ function App() {
   }, [getCartItems]);
 
 
-  // useEffect(()=>{checkAuth()},[checkAuth]);
-    // if(checkingAuth){
-    //   return <LoadingSpinner/>
-    // }
+  useEffect(()=>{checkAuth()},[checkAuth]);
+    if(checkingAuth){
+      return <LoadingSpinner/>
+    }
     return (
         <div class="min-h-screen bg-gray-900 text-white relative overflow-hidden">
             <div className="absolute inset-0 overflow-hidden">
