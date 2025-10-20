@@ -1,7 +1,6 @@
 import { redis } from '../libs/redis.js';
 import Product from '../models/product.model.js';
 import cloudinary from './../libs/cloudinary.js';
-import Product from './../models/product.model';
 
 export const getAllProducts = async (req, res) => {
     try {
@@ -112,11 +111,26 @@ export const getRecommendedProducts = async (req, res) => {
                 }
             }
         ]);
-        
+
         res.json(products);
     } catch (error) {
         res.status(500).json({
             message: 'Error fetching recommended products',
+            error
+        });
+    }
+};
+
+export const getProductsByCategory = async (req, res) => {
+    const {category} = req.params;
+    try {
+        const products = await Product
+            .find({ category: category });
+
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error fetching products by category',
             error
         });
     }
