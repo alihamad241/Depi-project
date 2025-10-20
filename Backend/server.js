@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.route.js';
 import paymentRoutes from './routes/payment.route.js';
 import { connectDB } from "./libs/db.js";
 import couponRoutes from "./routes/coupon.route.js";
+import analyticsRoutes from "./routes/analytics.route.js";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 5000;
 app.use("/api/auth", authRoutes)
 app.use("/api/payment", paymentRoutes)
 app.use("/api/coupons", couponRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 
 app.listen(PORT, () => {
