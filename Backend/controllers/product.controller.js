@@ -6,7 +6,7 @@ import Product from './../models/product.model';
 export const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find({});
-        res.status(200).json({products});
+        res.status(200).json({ products });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching products', error });
     }
@@ -22,31 +22,45 @@ export const getFeaturedProducts = async (req, res) => {
         featuredProducts = await Product.find({ isFeatured: true }).lean();
 
         if (!featuredProducts) {
-            return res.status(404).json({ message: 'No featured products found' });
+            return res
+                .status(404)
+                .json({ message: 'No featured products found' });
         }
 
         await redis.set('featured_products', JSON.stringify(featuredProducts)); // Cache for 1 hour
         res.json(featuredProducts);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching featured products', error });
+        res.status(500).json({
+            message: 'Error fetching featured products',
+            error
+        });
     }
 };
 
 export const createProduct = async (req, res) => {
     try {
         const { name, description, price, image, category } = req.body;
-        const newProduct = new Product({ name, description, price, isFeatured });
+        const newProduct = new Product({
+            name,
+            description,
+            price,
+            isFeatured
+        });
         let cloudinaryResponse = null;
 
         if (image) {
-            cloudinaryResponse = await cloudinary.uploader.upload(image, { folder: 'products' });
+            cloudinaryResponse = await cloudinary.uploader.upload(image, {
+                folder: 'products'
+            });
         }
 
         const product = await Product.create({
             name,
             description,
             price,
-            image: cloudinaryResponse?.secure_url ? cloudinaryResponse.secure_url : "",
+            image: cloudinaryResponse?.secure_url
+                ? cloudinaryResponse.secure_url
+                : '',
             category
         });
 
@@ -79,5 +93,31 @@ export const deleteProduct = async (req, res) => {
         res.json({ message: 'Product deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Error deleting product', error });
+    }
+};
+
+export const getRecommendedProducts = async (req, res) => {
+    try {
+        const products = await Product.aggregate([
+            {
+                $sample: { size: 10 }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    description: 1,
+                    image: 1,
+                    price: 1
+                }
+            }
+        ]);
+        
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error fetching recommended products',
+            error
+        });
     }
 };
