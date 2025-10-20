@@ -1,3 +1,5 @@
+import Product from '../models/product.model.js';
+
 export const addToCart = async (req, res) => {
     try {
         const { productId } = req.body;
@@ -64,5 +66,27 @@ export const updateQuantity = async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ message: 'Error updating quantity', error });
+    }
+};
+
+export const getCartProducts = async (req, res) => {
+    try {
+        const products = await Product.find({
+            _id: { $in: req.user.cartItems }
+        });
+        const cartItems = products.map(product => {
+            const item = req.user.cartItems.find(cartItem => cartItem.id === product.id);
+            return {
+                ...product.toJSON(),
+                quantity: item.quantity
+            };
+        });
+
+        res.json(cartItems);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error fetching cart products',
+            error
+        });
     }
 };
