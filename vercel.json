@@ -3,10 +3,11 @@
   "builds": [
     {
       "src": "Frontend/package.json",
-      "use": "@vercel/static-build"
+      "use": "@vercel/static-build",
+      "options": { "installCommand": "npm install", "buildCommand": "npm run build" }
     },
     {
-      "src": "package.json",
+      "src": "Backend/server.js",
       "use": "@vercel/node"
     }
   ],
