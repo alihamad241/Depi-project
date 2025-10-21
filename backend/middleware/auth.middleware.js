@@ -4,7 +4,6 @@ import User from '../models/user.model.js';
 export const protectRoute = async (req, res, next) => {
     try {
         const accessToken = req.cookies.accessToken;
-        console.log("Access Token:", accessToken);
 
         if (!accessToken) {
             return res.status(401).json({ message: 'Access Denied. No token provided.' });
