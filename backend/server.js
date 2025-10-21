@@ -42,7 +42,8 @@ import { fileURLToPath } from 'url';
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
+})
 
 connectDB();
 
-export default app;
+// export default app;
