@@ -3,7 +3,7 @@ import Product from '../models/product.model.js';
 export const addToCart = async (req, res) => {
     try {
         const { productId } = req.body;
-        const userId = req.user;
+        const user = req.user;
 
         const existingItem = user.cartItems.find(
             (item) => item.id === productId
@@ -71,18 +71,21 @@ export const updateQuantity = async (req, res) => {
 
 export const getCartProducts = async (req, res) => {
     try {
-        const products = await Product.find({
-            _id: { $in: req.user.cartItems }
-        });
-        const cartItems = products.map(product => {
-            const item = req.user.cartItems.find(cartItem => cartItem.id === product.id);
+        const productIds = req.user.cartItems.map((item) => item._id);
+        const products = await Product.find({ _id: { $in: productIds } });
+
+        const cartItems = products.map((product) => {
+            const item = req.user.cartItems.find(
+                (cartItem) => cartItem._id.toString() === product._id.toString()
+            );
             return {
                 ...product.toJSON(),
                 quantity: item.quantity
             };
         });
+        // console.log(cartItems);
 
-        res.json(cartItems);
+        res.status(200).json(cartItems);
     } catch (error) {
         res.status(500).json({
             message: 'Error fetching cart products',
