@@ -1,39 +1,37 @@
 import { CheckCircle, ArrowRight } from 'lucide-react';
 import React, {useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// import { useCartStore } from '../stores/useCartStore';
+import { useCartStore } from '../stores/useCartStore';
 import axios from 'axios';
-// import { class } from './../../node_modules/@babel/parser/lib/index';
 import Confetti from 'react-confetti';
-import number from './../../node_modules/d3-scale/src/number';
 
 const PurchaseSuccessPage = () => {
   const [isProcessing, setIsProcessing] =useState(true);
-  // const {clearCart}=useCartStore();
+  const {clearCart}=useCartStore();
   const [error, setError]=useState(null);
-  // useEffect(() => {
-  //   const handleCheckoutSuccess = async (sessionId) => {
-  //     try{
-  //       // await axios.post('/payments/checkout-success', { sessionId });
-  //       // clearCart();
-  //     }catch(error){
-  //       console.error("Error processing checkout success:", error);
-  //     }finally{
-  //       setIsProcessing(false);
-  //     }
-  //   }
-  //   const sessionId = new URLSearchParams(window.location.search).get('session_id');
-  //   if(sessionId){
-  //     handleCheckoutSuccess(sessionId);
-  //   }else{
-  //     setIsProcessing(false);
-  //     setError("No session ID found in URL");
-  //   }
-  // }, [clearCart]);
+  useEffect(() => {
+    const handleCheckoutSuccess = async (sessionId) => {
+      try{
+        await axios.post('/payments/checkout-success', { sessionId });
+        clearCart();
+      }catch(error){
+        console.error("Error processing checkout success:", error);
+      }finally{
+        setIsProcessing(false);
+      }
+    }
+    const sessionId = new URLSearchParams(window.location.search).get('session_id');
+    if(sessionId){
+      handleCheckoutSuccess(sessionId);
+    }else{
+      setIsProcessing(false);
+      setError("No session ID found in URL");
+    }
+  }, [clearCart]);
 
-  // if(isProcessing) return "Processing...";
+  if(isProcessing) return "Processing...";
 
-  // if (error) return `Error: ${error}`;
+  if (error) return `Error: ${error}`;
 
   return (
     <div className='h-screen flex items-center justify-center px-4'>
