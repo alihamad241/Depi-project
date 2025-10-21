@@ -2,23 +2,23 @@
   "version": 2,
   "builds": [
     {
-      "src": "Frontend/package.json",
+      "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": { "installCommand": "npm install", "buildCommand": "npm run build" }
     },
     {
-      "src": "Backend/server.js",
+      "src": "backend/server.js",
       "use": "@vercel/node"
     }
   ],
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/Backend/server.js"
+      "destination": "/backend/server.js"
     },
     {
       "source": "/(.*)",
-      "destination": "/Frontend"
+      "destination": "/frontend"
     }
   ]
 }
