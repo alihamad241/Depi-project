@@ -3,10 +3,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { UserPlus, Mail, Lock, User, ArrowRight, Loader } from "lucide-react";
 import { motion } from "framer-motion";
-// import { useUserStore } from "../stores/useUserStore";
+import { useUserStore } from "../stores/useUserStore";
 
 const SignUpPage = () => {
-    const loading = false;//will be removed when the useUserStore is available
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -14,17 +13,16 @@ const SignUpPage = () => {
         confirmPassword: "",
     });
 
-    // const {signup, loading}=useUserStore()
+    const {signup, loading}=useUserStore()
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(formData);
         console.log("called here");
-        // signup(formData);
+        signup(formData);
     };
     return (
         <>
-            {/* motion div */}
             <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
                 <motion.div
                     className="sm:mx-auto sm:w-full sm:max-w-md"
