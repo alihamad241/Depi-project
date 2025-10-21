@@ -1,35 +1,33 @@
-import HomePage from './pages/HomePage'
-import SignUpPage from './pages/SignUpPage'
-import LoginPage from './pages/LoginPage'
-import CartPage from './pages/CartPage'
-import Navbar from './components/Navbar'
+import HomePage from "./pages/HomePage";
+import SignUpPage from "./pages/SignUpPage";
+import LoginPage from "./pages/LoginPage";
+import CartPage from "./pages/CartPage";
+import Navbar from "./components/Navbar";
 import LoadingSpinner from "./components/LoadingSpinner";
-import CategoryPage from './pages/CategoryPage'
-import { useCartStore } from './stores/useCartStore'
-import {useEffect } from 'react'
+import CategoryPage from "./pages/CategoryPage";
+import { useCartStore } from "./stores/useCartStore";
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
 import AdminPage from "./pages/AdminPage";
-import { Toaster } from 'react-hot-toast';
-import { useUserStore } from './stores/useUserStore';
-
-
+import { Toaster } from "react-hot-toast";
+import { useUserStore } from "./stores/useUserStore";
 
 function App() {
-const {user, checkAuth, checkingAuth} = useUserStore();
-const {getCartItems} = useCartStore();
-useEffect(() => {
-		checkAuth();
-	}, [checkAuth]);
+    const { user, checkAuth, checkingAuth } = useUserStore();
+    const { getCartItems } = useCartStore();
+    useEffect(() => {
+        checkAuth();
+    }, [checkAuth]);
 
-	useEffect(() => {
-		if (!user) return;
+    useEffect(() => {
+        if (!user) return;
 
-		getCartItems();
-	}, [getCartItems, user]);
+        getCartItems();
+    }, [getCartItems, user]);
 
-	if (checkingAuth) return <LoadingSpinner />;
+    if (checkingAuth) return <LoadingSpinner />;
     return (
         <div class="min-h-screen bg-gray-900 text-white relative overflow-hidden">
             <div className="absolute inset-0 overflow-hidden">
@@ -41,18 +39,39 @@ useEffect(() => {
                 <Navbar />
 
                 <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/signup" element={!user ? <SignUpPage /> : <Navigate to='/' />} />
-                    <Route path="/login" element={<LoginPage />} />
                     <Route
-                      path='/purchase-success'
-                      element={user ? <PurchaseSuccessPage /> : <Navigate to='/login' />}
+                        path="/"
+                        element={<HomePage />}
                     />
-                    <Route path='/purchase-cancel' element={user? <PurchaseCancelPage/> : <Navigate to='/login' />} />
+                    <Route
+                        path="/signup"
+                        element={!user ? <SignUpPage /> : <Navigate to="/" />}
+                    />
+                    <Route
+                        path="/login"
+                        element={<LoginPage />}
+                    />
+                    <Route
+                        path="/purchase-success"
+                        element={user ? <PurchaseSuccessPage /> : <Navigate to="/login" />}
+                    />
+                    <Route
+                        path="/purchase-cancel"
+                        element={user ? <PurchaseCancelPage /> : <Navigate to="/login" />}
+                    />
 
-                    <Route path='/category/:category' element={<CategoryPage />}/>
-                    <Route path="/cart" element={<CartPage />} />
-                    <Route path="/admin" element={<AdminPage />} />
+                    <Route
+                        path="/category/:category"
+                        element={<CategoryPage />}
+                    />
+                    <Route
+                        path="/cart"
+                        element={<CartPage />}
+                    />
+                    <Route
+                        path="/admin"
+                        element={user?.role === "admin" ? <AdminPage /> : <Navigate to="/login" />}
+                    />
                 </Routes>
             </div>
             <Toaster />
