@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import axios from "../libs/axios";
+import axios from "../lib/axios";
 import { toast } from "react-hot-toast";
 
 export const useCartStore = create((set, get) => ({
     cart: [],
-    coupoun: null,
+    coupon: null,
     total: 0,
     subtotal: 0,
     isCouponApplied: false,

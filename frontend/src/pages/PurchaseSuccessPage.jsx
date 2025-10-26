@@ -2,7 +2,7 @@ import { CheckCircle, ArrowRight } from 'lucide-react';
 import React, {useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '../stores/useCartStore';
-import axios from 'axios';
+import axios from "../lib/axios";
 import Confetti from 'react-confetti';
 
 const PurchaseSuccessPage = () => {

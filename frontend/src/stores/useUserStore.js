@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import axios from "../libs/axios";
+import axios from "../lib/axios";
 import { toast } from "react-hot-toast"; //notification that can be shown to the user
 
 export const useUserStore = create((set, get) => ({

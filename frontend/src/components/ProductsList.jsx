@@ -45,9 +45,9 @@ const ProductsList = () => {
 							<div className='flex justify-between items-center mt-4'>
 								<p className='text-xl font-bold text-emerald-400'>${product.price.toFixed(2)}</p>
 								<div className='flex space-x-2'>
-									<button className='text-blue-400 hover:text-blue-300'>
+									{/* <button className='text-blue-400 hover:text-blue-300'>
 										<Edit className='h-5 w-5' />
-									</button>
+									</button> */}
 									<button
 										onClick={() => deleteProduct(product._id)}
 										className='text-red-400 hover:text-red-300'
